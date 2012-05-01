@@ -582,19 +582,19 @@ int main(int argc, char *argv[]) {
 #ifndef NOLIBCAIRO
         {"image", required_argument, NULL, 'i'},
         {"tiling", no_argument, NULL, 't'},
-        
+
         /* options for unlock indicator colors */
         // defining a lot of different chars here for the options -- TODO find a nicer way for this, maybe not offering single character options at all
-        {"insidevercolor", required_argument, NULL, '1'},
-        {"insidewrongcolor", required_argument, NULL, '2'},
-        {"insidecolor", required_argument, NULL, '3'},
-        {"ringvercolor", required_argument, NULL, '4'},
-        {"ringwrongcolor", required_argument, NULL, '5'},
-        {"ringcolor", required_argument, NULL, '6'},
-        {"linecolor", required_argument, NULL, '7'},
-        {"textcolor", required_argument, NULL, '8'},
-        {"keyhlcolor", required_argument, NULL, '9'},
-        {"bshlcolor", required_argument, NULL, '0'},
+        {"insidevercolor", required_argument, NULL, 0},
+        {"insidewrongcolor", required_argument, NULL, 0},
+        {"insidecolor", required_argument, NULL, 0},
+        {"ringvercolor", required_argument, NULL, 0},
+        {"ringwrongcolor", required_argument, NULL, 0},
+        {"ringcolor", required_argument, NULL, 0},
+        {"linecolor", required_argument, NULL, 0},
+        {"textcolor", required_argument, NULL, 0},
+        {"keyhlcolor", required_argument, NULL, 0},
+        {"bshlcolor", required_argument, NULL, 0},
 #endif
         {NULL, no_argument, NULL, 0}
     };
@@ -604,7 +604,7 @@ int main(int argc, char *argv[]) {
 
     while ((o = getopt_long(argc, argv, "hvnbdc:p:u"
 #ifndef NOLIBCAIRO
-        "i:t1:2:3:4:5:6:7:8:9:0:"
+        "i:t"
 #endif
         , longopts, &optind)) != -1) {
         switch (o) {
@@ -641,126 +641,6 @@ int main(int argc, char *argv[]) {
         case 't':
             tile = true;
             break;
-        case '1': {
-            char *arg = optarg;
-
-            /* Skip # if present */
-            if (arg[0] == '#')
-                arg++;
-
-            if (strlen(arg) != 8 || sscanf(arg, "%08[0-9a-fA-F]", insidevercolor) != 1)
-                errx(1, "insidevercolor is invalid, color must be given in 8-byte format: rrggbbaa\n");
-
-            break;
-        }
-        case '2': {
-            char *arg = optarg;
-
-            /* Skip # if present */
-            if (arg[0] == '#')
-                arg++;
-
-            if (strlen(arg) != 8 || sscanf(arg, "%08[0-9a-fA-F]", insidewrongcolor) != 1)
-                errx(1, "insidewrongcolor is invalid, color must be given in 8-byte format: rrggbbaa\n");
-
-            break;
-        }
-        case '3': {
-            char *arg = optarg;
-
-            /* Skip # if present */
-            if (arg[0] == '#')
-                arg++;
-
-            if (strlen(arg) != 8 || sscanf(arg, "%08[0-9a-fA-F]", insidecolor) != 1)
-                errx(1, "insidecolor is invalid, color must be given in 8-byte format: rrggbbaa\n");
-
-            break;
-        }
-        case '4': {
-            char *arg = optarg;
-
-            /* Skip # if present */
-            if (arg[0] == '#')
-                arg++;
-
-            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", ringvercolor) != 1)
-                errx(1, "ringvercolor is invalid, color must be given in 6-byte format: rrggbb\n");
-
-            break;
-        }
-        case '5': {
-            char *arg = optarg;
-
-            /* Skip # if present */
-            if (arg[0] == '#')
-                arg++;
-
-            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", ringwrongcolor) != 1)
-                errx(1, "ringwrongcolor is invalid, color must be given in 6-byte format: rrggbb\n");
-
-            break;
-        }
-        case '6': {
-            char *arg = optarg;
-
-            /* Skip # if present */
-            if (arg[0] == '#')
-                arg++;
-
-            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", ringcolor) != 1)
-                errx(1, "ringcolor is invalid, color must be given in 6-byte format: rrggbb\n");
-
-            break;
-        }
-        case '7': {
-            char *arg = optarg;
-
-            /* Skip # if present */
-            if (arg[0] == '#')
-                arg++;
-
-            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", linecolor) != 1)
-                errx(1, "linecolor is invalid, color must be given in 6-byte format: rrggbb\n");
-
-            break;
-        }
-        case '8': {
-            char *arg = optarg;
-
-            /* Skip # if present */
-            if (arg[0] == '#')
-                arg++;
-
-            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", textcolor) != 1)
-                errx(1, "textcolor is invalid, color must be given in 6-byte format: rrggbb\n");
-
-            break;
-        }
-        case '9': {
-            char *arg = optarg;
-
-            /* Skip # if present */
-            if (arg[0] == '#')
-                arg++;
-
-            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", keyhlcolor) != 1)
-                errx(1, "keyhlcolor is invalid, color must be given in 6-byte format: rrggbb\n");
-
-            break;
-        }
-        case '0': {
-            char *arg = optarg;
-
-            /* Skip # if present */
-            if (arg[0] == '#')
-                arg++;
-
-            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", bshlcolor) != 1)
-                errx(1, "bshlcolor is invalid, color must be given in 6-byte format: rrggbb\n");
-
-            break;
-        }
 #endif
         case 'p':
             if (!strcmp(optarg, "win")) {
@@ -774,6 +654,108 @@ int main(int argc, char *argv[]) {
         case 0:
             if (strcmp(longopts[optind].name, "debug") == 0)
                 debug_mode = true;
+#ifndef NOLIBCAIRO
+            else if (strcmp(longopts[optind].name, "insidevercolor") == 0) {
+                char *arg = optarg;
+
+                /* Skip # if present */
+                if (arg[0] == '#')
+                    arg++;
+
+                if (strlen(arg) != 8 || sscanf(arg, "%08[0-9a-fA-F]", insidevercolor) != 1)
+                    errx(1, "insidevercolor is invalid, color must be given in 8-byte format: rrggbbaa\n");
+            }
+            else if (strcmp(longopts[optind].name, "insidewrongcolor") == 0) {
+                char *arg = optarg;
+
+                /* Skip # if present */
+                if (arg[0] == '#')
+                    arg++;
+
+                if (strlen(arg) != 8 || sscanf(arg, "%08[0-9a-fA-F]", insidewrongcolor) != 1)
+                    errx(1, "insidewrongcolor is invalid, color must be given in 8-byte format: rrggbbaa\n");
+            }
+            else if (strcmp(longopts[optind].name, "insidecolor") == 0) {
+                char *arg = optarg;
+
+                /* Skip # if present */
+                if (arg[0] == '#')
+                    arg++;
+
+                if (strlen(arg) != 8 || sscanf(arg, "%08[0-9a-fA-F]", insidecolor) != 1)
+                    errx(1, "insidecolor is invalid, color must be given in 8-byte format: rrggbbaa\n");
+            }
+            else if (strcmp(longopts[optind].name, "ringvercolor") == 0) {
+                char *arg = optarg;
+
+                /* Skip # if present */
+                if (arg[0] == '#')
+                    arg++;
+
+                if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", ringvercolor) != 1)
+                    errx(1, "ringvercolor is invalid, color must be given in 6-byte format: rrggbb\n");
+            }
+            else if (strcmp(longopts[optind].name, "ringwrongcolor") == 0) {
+                char *arg = optarg;
+
+                /* Skip # if present */
+                if (arg[0] == '#')
+                    arg++;
+
+                if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", ringwrongcolor) != 1)
+                    errx(1, "ringwrongcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+            }
+            else if (strcmp(longopts[optind].name, "ringcolor") == 0) {
+                char *arg = optarg;
+
+                /* Skip # if present */
+                if (arg[0] == '#')
+                    arg++;
+
+                if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", ringcolor) != 1)
+                    errx(1, "ringcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+            }
+            else if (strcmp(longopts[optind].name, "linecolor") == 0) {
+                char *arg = optarg;
+
+                /* Skip # if present */
+                if (arg[0] == '#')
+                    arg++;
+
+                if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", linecolor) != 1)
+                    errx(1, "linecolor is invalid, color must be given in 6-byte format: rrggbb\n");
+            }
+            else if (strcmp(longopts[optind].name, "textcolor") == 0) {
+                char *arg = optarg;
+
+                /* Skip # if present */
+                if (arg[0] == '#')
+                    arg++;
+
+                if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", textcolor) != 1)
+                    errx(1, "textcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+            }
+            else if (strcmp(longopts[optind].name, "keyhlcolor") == 0) {
+                char *arg = optarg;
+
+                /* Skip # if present */
+                if (arg[0] == '#')
+                    arg++;
+
+                if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", keyhlcolor) != 1)
+                    errx(1, "keyhlcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+            }
+            else if (strcmp(longopts[optind].name, "bshlcolor") == 0) {
+                char *arg = optarg;
+
+                /* Skip # if present */
+                if (arg[0] == '#')
+                    arg++;
+
+                if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", bshlcolor) != 1)
+                    errx(1, "bshlcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+            }
+#endif
             break;
         default:
             errx(1, "Syntax: i3lock [-v] [-n] [-b] [-d] [-c color] [-u] [-p win|default]"
