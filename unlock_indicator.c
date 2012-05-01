@@ -125,6 +125,14 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
         cairo_fill(xcb_ctx);
     }
 
+    /* build indicator color structures */
+    char strgroups[3][3] = {{insidevercolor[0], insidevercolor[1], '\0'},
+                            {insidevercolor[2], insidevercolor[3], '\0'},
+                            {insidevercolor[4], insidevercolor[5], '\0'}};
+    uint32_t insidever16[3] = {(strtol(strgroups[0], NULL, 16)),
+                            (strtol(strgroups[1], NULL, 16)),
+                            (strtol(strgroups[2], NULL, 16))};
+
     if (unlock_state >= STATE_KEY_PRESSED && unlock_indicator) {
         /* Draw a (centered) circle with transparent background. */
         cairo_set_line_width(ctx, 10.0);
@@ -139,7 +147,7 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
          * (currently verifying, wrong password, or default) */
         switch (pam_state) {
             case STATE_PAM_VERIFY:
-                cairo_set_source_rgba(ctx, .9, 114.0/255, 255.0/255, 0.75); // TODO inside color while verifying
+                cairo_set_source_rgba(ctx, insidever16[0]/255, insidever16[1]/255, insidever16[2]/255, 0.75); // TODO inside color while verifying
                 break;
             case STATE_PAM_WRONG:
                 cairo_set_source_rgba(ctx, 250.0/255, 0, 0, 0.75); // TODO inside color after wrong guess

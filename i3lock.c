@@ -42,7 +42,7 @@
 
 char color[7] = "ffffff";
 /* options for unlock indicator colors */
-char insidevercolor[7] = "ff0000";
+char insidevercolor[7] = "3300fa"; // TODO alpha channel
 char insidewrongcolor[7] = "ff0000";
 char insidecolor[7] = "ff0000";
 char ringvercolor[7] = "ff0000";
@@ -596,7 +596,7 @@ int main(int argc, char *argv[]) {
 
     while ((o = getopt_long(argc, argv, "hvnbdc:p:u"
 #ifndef NOLIBCAIRO
-        "i:t" //TODO need to add my options here
+        "i:t1:2:3:4:5:6:" //TODO need to add my options here
 #endif
         , longopts, &optind)) != -1) {
         switch (o) {
