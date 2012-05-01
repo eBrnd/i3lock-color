@@ -208,7 +208,7 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
         cairo_stroke(ctx);
 
         /* Draw an inner seperator line. */
-        cairo_set_source_rgb(ctx, 0, 0, 0);
+        cairo_set_source_rgb(ctx, 0, 0, 0); // TODO line color
         cairo_set_line_width(ctx, 2.0);
         cairo_arc(ctx,
                   BUTTON_CENTER /* x */,
@@ -237,7 +237,7 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
             cairo_text_extents_t extents;
             double x, y;
 
-            cairo_set_source_rgb(ctx, 0, 0, 0);
+            cairo_set_source_rgb(ctx, 0, 0, 0); // TODO text color
             cairo_set_font_size(ctx, 28.0);
 
             cairo_text_extents(ctx, text, &extents);
@@ -264,16 +264,16 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
                       highlight_start + (M_PI / 3.0));
             if (unlock_state == STATE_KEY_ACTIVE) {
                 /* For normal keys, we use a lighter green. */
-                cairo_set_source_rgb(ctx, 51.0/255, 219.0/255, 0);
+                cairo_set_source_rgb(ctx, 51.0/255, 219.0/255, 0); // TODO keypress highlight color
             } else {
                 /* For backspace, we use red. */
-                cairo_set_source_rgb(ctx, 219.0/255, 51.0/255, 0);
+                cairo_set_source_rgb(ctx, 219.0/255, 51.0/255, 0); // TODO backspace highlight color
             }
             cairo_stroke(ctx);
 
             /* Draw two little separators for the highlighted part of the
              * unlock indicator. */
-            cairo_set_source_rgb(ctx, 0, 0, 0);
+            cairo_set_source_rgb(ctx, 0, 0, 0); // TODO line color
             cairo_arc(ctx,
                       BUTTON_CENTER /* x */,
                       BUTTON_CENTER /* y */,
