@@ -604,7 +604,7 @@ int main(int argc, char *argv[]) {
 
     while ((o = getopt_long(argc, argv, "hvnbdc:p:u"
 #ifndef NOLIBCAIRO
-        "i:t1:2:3:4:5:6:"
+        "i:t1:2:3:4:5:6:7:8:9:0:"
 #endif
         , longopts, &optind)) != -1) {
         switch (o) {
