@@ -63,6 +63,10 @@ extern char insidecolor[9];
 extern char ringvercolor[7];
 extern char ringwrongcolor[7];
 extern char ringcolor[7];
+extern char linecolor[7];
+extern char textcolor[7];
+extern char keyhlcolor[7];
+extern char bshlcolor[7];
 
 /*******************************************************************************
  * Local variables.
@@ -168,6 +172,30 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
     uint32_t ring16[3] = {(strtol(strgroupsr[0], NULL, 16)),
                           (strtol(strgroupsr[1], NULL, 16)),
                           (strtol(strgroupsr[2], NULL, 16))};
+    char strgroupsl[3][3] = {{linecolor[0], linecolor[1], '\0'},
+                             {linecolor[2], linecolor[3], '\0'},
+                             {linecolor[4], linecolor[5], '\0'}};
+    uint32_t line16[3] = {(strtol(strgroupsl[0], NULL, 16)),
+                          (strtol(strgroupsl[1], NULL, 16)),
+                          (strtol(strgroupsl[2], NULL, 16))};
+    char strgroupst[3][3] = {{textcolor[0], textcolor[1], '\0'},
+                             {textcolor[2], textcolor[3], '\0'},
+                             {textcolor[4], textcolor[5], '\0'}};
+    uint32_t text16[3] = {(strtol(strgroupst[0], NULL, 16)),
+                          (strtol(strgroupst[1], NULL, 16)),
+                          (strtol(strgroupst[2], NULL, 16))};
+    char strgroupsk[3][3] = {{keyhlcolor[0], textcolor[1], '\0'},
+                             {keyhlcolor[2], textcolor[3], '\0'},
+                             {keyhlcolor[4], textcolor[5], '\0'}};
+    uint32_t keyhl16[3] = {(strtol(strgroupsk[0], NULL, 16)),
+                           (strtol(strgroupsk[1], NULL, 16)),
+                           (strtol(strgroupsk[2], NULL, 16))};
+    char strgroupsb[3][3] = {{bshlcolor[0], textcolor[1], '\0'},
+                             {bshlcolor[2], textcolor[3], '\0'},
+                             {bshlcolor[4], textcolor[5], '\0'}};
+    uint32_t bshl16[3] = {(strtol(strgroupsb[0], NULL, 16)),
+                          (strtol(strgroupsb[1], NULL, 16)),
+                          (strtol(strgroupsb[2], NULL, 16))};
 
     if (unlock_state >= STATE_KEY_PRESSED && unlock_indicator) {
         /* Draw a (centered) circle with transparent background. */
@@ -208,7 +236,7 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
         cairo_stroke(ctx);
 
         /* Draw an inner seperator line. */
-        cairo_set_source_rgb(ctx, 0, 0, 0); // TODO line color
+        cairo_set_source_rgb(ctx, (double)line16[0]/255, (double)line16[1]/255, (double)line16[2]/255);
         cairo_set_line_width(ctx, 2.0);
         cairo_arc(ctx,
                   BUTTON_CENTER /* x */,
@@ -237,7 +265,7 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
             cairo_text_extents_t extents;
             double x, y;
 
-            cairo_set_source_rgb(ctx, 0, 0, 0); // TODO text color
+            cairo_set_source_rgb(ctx, (double)text16[0]/255, (double)text16[1]/255, (double)text16[2]/255);
             cairo_set_font_size(ctx, 28.0);
 
             cairo_text_extents(ctx, text, &extents);
@@ -264,16 +292,16 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
                       highlight_start + (M_PI / 3.0));
             if (unlock_state == STATE_KEY_ACTIVE) {
                 /* For normal keys, we use a lighter green. */
-                cairo_set_source_rgb(ctx, 51.0/255, 219.0/255, 0); // TODO keypress highlight color
+                cairo_set_source_rgb(ctx, (double)keyhl16[0]/255, (double)keyhl16[1]/255, (double)keyhl16[2]/255);
             } else {
                 /* For backspace, we use red. */
-                cairo_set_source_rgb(ctx, 219.0/255, 51.0/255, 0); // TODO backspace highlight color
+                cairo_set_source_rgb(ctx, (double)bshl16[0]/255, (double)bshl16[1]/255, (double)bshl16[2]/255);
             }
             cairo_stroke(ctx);
 
             /* Draw two little separators for the highlighted part of the
              * unlock indicator. */
-            cairo_set_source_rgb(ctx, 0, 0, 0); // TODO line color
+            cairo_set_source_rgb(ctx, (double)line16[0]/255, (double)line16[1]/255, (double)line16[2]/255);
             cairo_arc(ctx,
                       BUTTON_CENTER /* x */,
                       BUTTON_CENTER /* y */,

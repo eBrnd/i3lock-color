@@ -48,6 +48,10 @@ char insidecolor[9] = "000000bf";
 char ringvercolor[7] = "3300fa";
 char ringwrongcolor[7] = "7d3300";
 char ringcolor[7] = "337d00";
+char linecolor[7] = "000000";
+char textcolor[7] = "000000";
+char keyhlcolor[7] = "33db00";
+char bshlcolor[7] = "db3300";
 
 uint32_t last_resolution[2];
 xcb_window_t win;
@@ -587,6 +591,10 @@ int main(int argc, char *argv[]) {
         {"ringvercolor", required_argument, NULL, '4'},
         {"ringwrongcolor", required_argument, NULL, '5'},
         {"ringcolor", required_argument, NULL, '6'},
+        {"linecolor", required_argument, NULL, '7'},
+        {"textcolor", required_argument, NULL, '8'},
+        {"keyhlcolor", required_argument, NULL, '9'},
+        {"bshlcolor", required_argument, NULL, '0'},
 #endif
         {NULL, no_argument, NULL, 0}
     };
@@ -702,6 +710,54 @@ int main(int argc, char *argv[]) {
 
             if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", ringcolor) != 1)
                 errx(1, "ringcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+
+            break;
+        }
+        case '7': {
+            char *arg = optarg;
+
+            /* Skip # if present */
+            if (arg[0] == '#')
+                arg++;
+
+            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", linecolor) != 1)
+                errx(1, "linecolor is invalid, color must be given in 6-byte format: rrggbb\n");
+
+            break;
+        }
+        case '8': {
+            char *arg = optarg;
+
+            /* Skip # if present */
+            if (arg[0] == '#')
+                arg++;
+
+            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", textcolor) != 1)
+                errx(1, "textcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+
+            break;
+        }
+        case '9': {
+            char *arg = optarg;
+
+            /* Skip # if present */
+            if (arg[0] == '#')
+                arg++;
+
+            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", keyhlcolor) != 1)
+                errx(1, "keyhlcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+
+            break;
+        }
+        case '0': {
+            char *arg = optarg;
+
+            /* Skip # if present */
+            if (arg[0] == '#')
+                arg++;
+
+            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", bshlcolor) != 1)
+                errx(1, "bshlcolor is invalid, color must be given in 6-byte format: rrggbb\n");
 
             break;
         }
