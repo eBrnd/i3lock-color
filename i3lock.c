@@ -41,6 +41,14 @@
 #include "xinerama.h"
 
 char color[7] = "ffffff";
+/* options for unlock indicator colors */
+char insidevercolor[7] = "ff0000";
+char insidewrongcolor[7] = "ff0000";
+char insidecolor[7] = "ff0000";
+char ringvercolor[7] = "ff0000";
+char ringwrongcolor[7] = "ff0000";
+char ringcolor[7] = "ff0000";
+
 uint32_t last_resolution[2];
 xcb_window_t win;
 static xcb_cursor_t cursor;
@@ -570,6 +578,15 @@ int main(int argc, char *argv[]) {
 #ifndef NOLIBCAIRO
         {"image", required_argument, NULL, 'i'},
         {"tiling", no_argument, NULL, 't'},
+        
+        /* options for unlock indicator colors */
+        // defining a lot of different chars here for the options -- TODO find a nicer way for this, maybe not offering single character options at all
+        {"insidevercolor", required_argument, NULL, '1'},
+        {"insidewrongcolor", required_argument, NULL, '2'},
+        {"insidecolor", required_argument, NULL, '3'},
+        {"ringvercolor", required_argument, NULL, '4'},
+        {"ringwrongcolor", required_argument, NULL, '5'},
+        {"ringcolor", required_argument, NULL, '6'},
 #endif
         {NULL, no_argument, NULL, 0}
     };
@@ -579,7 +596,7 @@ int main(int argc, char *argv[]) {
 
     while ((o = getopt_long(argc, argv, "hvnbdc:p:u"
 #ifndef NOLIBCAIRO
-        "i:t"
+        "i:t" //TODO need to add my options here
 #endif
         , longopts, &optind)) != -1) {
         switch (o) {
@@ -616,6 +633,78 @@ int main(int argc, char *argv[]) {
         case 't':
             tile = true;
             break;
+        case '1': {
+            char *arg = optarg;
+
+            /* Skip # if present */
+            if (arg[0] == '#')
+                arg++;
+
+            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", insidevercolor) != 1)
+                errx(1, "insidevercolor is invalid, color must be given in 6-byte format: rrggbb\n");
+
+            break;
+        }
+        case '2': {
+            char *arg = optarg;
+
+            /* Skip # if present */
+            if (arg[0] == '#')
+                arg++;
+
+            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", insidewrongcolor) != 1)
+                errx(1, "insidewrongcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+
+            break;
+        }
+        case '3': {
+            char *arg = optarg;
+
+            /* Skip # if present */
+            if (arg[0] == '#')
+                arg++;
+
+            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", insidecolor) != 1)
+                errx(1, "insidecolor is invalid, color must be given in 6-byte format: rrggbb\n");
+
+            break;
+        }
+        case '4': {
+            char *arg = optarg;
+
+            /* Skip # if present */
+            if (arg[0] == '#')
+                arg++;
+
+            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", ringvercolor) != 1)
+                errx(1, "ringvercolor is invalid, color must be given in 6-byte format: rrggbb\n");
+
+            break;
+        }
+        case '5': {
+            char *arg = optarg;
+
+            /* Skip # if present */
+            if (arg[0] == '#')
+                arg++;
+
+            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", ringwrongcolor) != 1)
+                errx(1, "ringwrongcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+
+            break;
+        }
+        case '6': {
+            char *arg = optarg;
+
+            /* Skip # if present */
+            if (arg[0] == '#')
+                arg++;
+
+            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", ringcolor) != 1)
+                errx(1, "ringcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+
+            break;
+        }
 #endif
         case 'p':
             if (!strcmp(optarg, "win")) {
@@ -633,7 +722,7 @@ int main(int argc, char *argv[]) {
         default:
             errx(1, "Syntax: i3lock [-v] [-n] [-b] [-d] [-c color] [-u] [-p win|default]"
 #ifndef NOLIBCAIRO
-            " [-i image.png] [-t]"
+            " [-i image.png] [-t]" // TODO document new options :P
 #else
             " (compiled with NOLIBCAIRO)"
 #endif

@@ -54,8 +54,15 @@ extern cairo_surface_t *img;
 
 /* Whether the image should be tiled. */
 extern bool tile;
-/* The background color to use (in hex). (TODO)*/
+/* The background color to use (in hex). */
 extern char color[7];
+/* indicator color options */
+extern char insidevercolor[7];
+extern char insidewrongcolor[7];
+extern char insidecolor[7];
+extern char ringvercolor[7];
+extern char ringwrongcolor[7];
+extern char ringcolor[7];
 
 /*******************************************************************************
  * Local variables.
