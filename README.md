@@ -15,4 +15,4 @@ I added the following command line options:
 * `--keyhlcolor=rrggbb` -- Keypress highlight segments
 * `--bshlcolor=rrggbb` -- Backspace highlight segments
 
-Unfortunately, because I didn't want to invade the way in which command line options are handled, the shorthand command line options are -1, -2, -3, ..., -0. I hope I'll get around to making it more elegand soon.
+Unfortunately, because I didn't want to invade the way in which command line options are handled, the shorthand command line options are `-1`, `-2`, `-3`, ..., `-0`. I hope I'll get around to making it more elegant soon.
