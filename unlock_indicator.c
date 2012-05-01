@@ -60,13 +60,13 @@ extern char color[7];
 extern char insidevercolor[9];
 extern char insidewrongcolor[9];
 extern char insidecolor[9];
-extern char ringvercolor[7];
-extern char ringwrongcolor[7];
-extern char ringcolor[7];
-extern char linecolor[7];
-extern char textcolor[7];
-extern char keyhlcolor[7];
-extern char bshlcolor[7];
+extern char ringvercolor[9];
+extern char ringwrongcolor[9];
+extern char ringcolor[9];
+extern char linecolor[9];
+extern char textcolor[9];
+extern char keyhlcolor[9];
+extern char bshlcolor[9];
 
 /*******************************************************************************
  * Local variables.
@@ -129,6 +129,7 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
         cairo_fill(xcb_ctx);
     }
 
+#ifndef NOLIBCAIRO
     /* build indicator color arrays */
     char strgroupsiv[4][3] = {{insidevercolor[0], insidevercolor[1], '\0'},
                               {insidevercolor[2], insidevercolor[3], '\0'},
@@ -154,48 +155,63 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
                             (strtol(strgroupsi[1], NULL, 16)),
                             (strtol(strgroupsi[2], NULL, 16)),
                             (strtol(strgroupsi[3], NULL, 16))};
-    char strgroupsrv[3][3] = {{ringvercolor[0], ringvercolor[1], '\0'},
+    char strgroupsrv[4][3] = {{ringvercolor[0], ringvercolor[1], '\0'},
                               {ringvercolor[2], ringvercolor[3], '\0'},
-                              {ringvercolor[4], ringvercolor[5], '\0'}};
-    uint32_t ringver16[3] = {(strtol(strgroupsrv[0], NULL, 16)),
+                              {ringvercolor[4], ringvercolor[5], '\0'},
+                              {ringvercolor[6], ringvercolor[7], '\0'}};
+    uint32_t ringver16[4] = {(strtol(strgroupsrv[0], NULL, 16)),
                              (strtol(strgroupsrv[1], NULL, 16)),
-                             (strtol(strgroupsrv[2], NULL, 16))};
-    char strgroupsrw[3][3] = {{ringwrongcolor[0], ringwrongcolor[1], '\0'},
+                             (strtol(strgroupsrv[2], NULL, 16)),
+                             (strtol(strgroupsrv[3], NULL, 16))};
+    char strgroupsrw[4][3] = {{ringwrongcolor[0], ringwrongcolor[1], '\0'},
                               {ringwrongcolor[2], ringwrongcolor[3], '\0'},
-                              {ringwrongcolor[4], ringwrongcolor[5], '\0'}};
-    uint32_t ringwrong16[3] = {(strtol(strgroupsrw[0], NULL, 16)),
+                              {ringwrongcolor[4], ringwrongcolor[5], '\0'},
+                              {ringwrongcolor[6], ringwrongcolor[7], '\0'}};
+    uint32_t ringwrong16[4] = {(strtol(strgroupsrw[0], NULL, 16)),
                                (strtol(strgroupsrw[1], NULL, 16)),
-                               (strtol(strgroupsrw[2], NULL, 16))};
-    char strgroupsr[3][3] = {{ringcolor[0], ringcolor[1], '\0'},
+                               (strtol(strgroupsrw[2], NULL, 16)),
+                               (strtol(strgroupsrw[3], NULL, 16))};
+    char strgroupsr[4][3] = {{ringcolor[0], ringcolor[1], '\0'},
                              {ringcolor[2], ringcolor[3], '\0'},
-                             {ringcolor[4], ringcolor[5], '\0'}};
-    uint32_t ring16[3] = {(strtol(strgroupsr[0], NULL, 16)),
+                             {ringcolor[4], ringcolor[5], '\0'},
+                             {ringcolor[6], ringcolor[7], '\0'}};
+    uint32_t ring16[4] = {(strtol(strgroupsr[0], NULL, 16)),
                           (strtol(strgroupsr[1], NULL, 16)),
-                          (strtol(strgroupsr[2], NULL, 16))};
-    char strgroupsl[3][3] = {{linecolor[0], linecolor[1], '\0'},
+                          (strtol(strgroupsr[2], NULL, 16)),
+                          (strtol(strgroupsr[3], NULL, 16))};
+    char strgroupsl[4][3] = {{linecolor[0], linecolor[1], '\0'},
                              {linecolor[2], linecolor[3], '\0'},
-                             {linecolor[4], linecolor[5], '\0'}};
-    uint32_t line16[3] = {(strtol(strgroupsl[0], NULL, 16)),
+                             {linecolor[4], linecolor[5], '\0'},
+                             {linecolor[6], linecolor[7], '\0'}};
+    uint32_t line16[4] = {(strtol(strgroupsl[0], NULL, 16)),
                           (strtol(strgroupsl[1], NULL, 16)),
-                          (strtol(strgroupsl[2], NULL, 16))};
-    char strgroupst[3][3] = {{textcolor[0], textcolor[1], '\0'},
+                          (strtol(strgroupsl[2], NULL, 16)),
+                          (strtol(strgroupsl[3], NULL, 16))};
+    char strgroupst[4][3] = {{textcolor[0], textcolor[1], '\0'},
                              {textcolor[2], textcolor[3], '\0'},
-                             {textcolor[4], textcolor[5], '\0'}};
-    uint32_t text16[3] = {(strtol(strgroupst[0], NULL, 16)),
+                             {textcolor[4], textcolor[5], '\0'},
+                             {textcolor[6], textcolor[7], '\0'}};
+    uint32_t text16[4] = {(strtol(strgroupst[0], NULL, 16)),
                           (strtol(strgroupst[1], NULL, 16)),
-                          (strtol(strgroupst[2], NULL, 16))};
-    char strgroupsk[3][3] = {{keyhlcolor[0], textcolor[1], '\0'},
+                          (strtol(strgroupst[2], NULL, 16)),
+                          (strtol(strgroupst[3], NULL, 16))};
+    char strgroupsk[4][3] = {{keyhlcolor[0], textcolor[1], '\0'},
                              {keyhlcolor[2], textcolor[3], '\0'},
-                             {keyhlcolor[4], textcolor[5], '\0'}};
-    uint32_t keyhl16[3] = {(strtol(strgroupsk[0], NULL, 16)),
+                             {keyhlcolor[4], textcolor[5], '\0'},
+                             {keyhlcolor[6], textcolor[7], '\0'}};
+    uint32_t keyhl16[4] = {(strtol(strgroupsk[0], NULL, 16)),
                            (strtol(strgroupsk[1], NULL, 16)),
-                           (strtol(strgroupsk[2], NULL, 16))};
-    char strgroupsb[3][3] = {{bshlcolor[0], textcolor[1], '\0'},
+                           (strtol(strgroupsk[2], NULL, 16)),
+                           (strtol(strgroupsk[3], NULL, 16))};
+    char strgroupsb[4][3] = {{bshlcolor[0], textcolor[1], '\0'},
                              {bshlcolor[2], textcolor[3], '\0'},
-                             {bshlcolor[4], textcolor[5], '\0'}};
-    uint32_t bshl16[3] = {(strtol(strgroupsb[0], NULL, 16)),
+                             {bshlcolor[4], textcolor[5], '\0'},
+                             {bshlcolor[6], textcolor[7], '\0'}};
+    uint32_t bshl16[4] = {(strtol(strgroupsb[0], NULL, 16)),
                           (strtol(strgroupsb[1], NULL, 16)),
-                          (strtol(strgroupsb[2], NULL, 16))};
+                          (strtol(strgroupsb[2], NULL, 16)),
+                          (strtol(strgroupsb[3], NULL, 16))};
+#endif
 
     if (unlock_state >= STATE_KEY_PRESSED && unlock_indicator) {
         /* Draw a (centered) circle with transparent background. */
@@ -224,19 +240,19 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
 
         switch (pam_state) {
             case STATE_PAM_VERIFY:
-                cairo_set_source_rgb(ctx, (double)ringver16[0]/255, (double)ringver16[1]/255, (double)ringver16[2]/255);
+                cairo_set_source_rgba(ctx, (double)ringver16[0]/255, (double)ringver16[1]/255, (double)ringver16[2]/255, (double)ringver16[3]/255);
                 break;
             case STATE_PAM_WRONG:
-                cairo_set_source_rgb(ctx, (double)ringwrong16[0]/255, (double)ringwrong16[1]/255, (double)ringwrong16[2]/255);
+                cairo_set_source_rgba(ctx, (double)ringwrong16[0]/255, (double)ringwrong16[1]/255, (double)ringwrong16[2]/255, (double)ringwrong16[3]/255);
                 break;
             case STATE_PAM_IDLE:
-                cairo_set_source_rgb(ctx, (double)ring16[0]/255, (double)ring16[1]/255, (double)ring16[2]/255);
+                cairo_set_source_rgba(ctx, (double)ring16[0]/255, (double)ring16[1]/255, (double)ring16[2]/255, (double)ring16[3]/255);
                 break;
         }
         cairo_stroke(ctx);
 
         /* Draw an inner seperator line. */
-        cairo_set_source_rgb(ctx, (double)line16[0]/255, (double)line16[1]/255, (double)line16[2]/255);
+        cairo_set_source_rgba(ctx, (double)line16[0]/255, (double)line16[1]/255, (double)line16[2]/255, (double)line16[3]/255);
         cairo_set_line_width(ctx, 2.0);
         cairo_arc(ctx,
                   BUTTON_CENTER /* x */,
@@ -265,7 +281,7 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
             cairo_text_extents_t extents;
             double x, y;
 
-            cairo_set_source_rgb(ctx, (double)text16[0]/255, (double)text16[1]/255, (double)text16[2]/255);
+            cairo_set_source_rgba(ctx, (double)text16[0]/255, (double)text16[1]/255, (double)text16[2]/255, (double)text16[3]/255);
             cairo_set_font_size(ctx, 28.0);
 
             cairo_text_extents(ctx, text, &extents);
@@ -292,16 +308,16 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
                       highlight_start + (M_PI / 3.0));
             if (unlock_state == STATE_KEY_ACTIVE) {
                 /* For normal keys, we use a lighter green. */
-                cairo_set_source_rgb(ctx, (double)keyhl16[0]/255, (double)keyhl16[1]/255, (double)keyhl16[2]/255);
+                cairo_set_source_rgba(ctx, (double)keyhl16[0]/255, (double)keyhl16[1]/255, (double)keyhl16[2]/255, (double)keyhl16[3]/255);
             } else {
                 /* For backspace, we use red. */
-                cairo_set_source_rgb(ctx, (double)bshl16[0]/255, (double)bshl16[1]/255, (double)bshl16[2]/255);
+                cairo_set_source_rgba(ctx, (double)bshl16[0]/255, (double)bshl16[1]/255, (double)bshl16[2]/255, (double)bshl16[3]/255);
             }
             cairo_stroke(ctx);
 
             /* Draw two little separators for the highlighted part of the
              * unlock indicator. */
-            cairo_set_source_rgb(ctx, (double)line16[0]/255, (double)line16[1]/255, (double)line16[2]/255);
+            cairo_set_source_rgba(ctx, (double)line16[0]/255, (double)line16[1]/255, (double)line16[2]/255, (double)line16[3]/255);
             cairo_arc(ctx,
                       BUTTON_CENTER /* x */,
                       BUTTON_CENTER /* y */,
