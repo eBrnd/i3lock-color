@@ -54,7 +54,7 @@ extern cairo_surface_t *img;
 
 /* Whether the image should be tiled. */
 extern bool tile;
-/* The background color to use (in hex). */
+/* The background color to use (in hex). (TODO)*/
 extern char color[7];
 
 /*******************************************************************************
@@ -132,26 +132,26 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
          * (currently verifying, wrong password, or default) */
         switch (pam_state) {
             case STATE_PAM_VERIFY:
-                cairo_set_source_rgba(ctx, 0, 114.0/255, 255.0/255, 0.75);
+                cairo_set_source_rgba(ctx, .9, 114.0/255, 255.0/255, 0.75); // TODO inside color while verifying
                 break;
             case STATE_PAM_WRONG:
-                cairo_set_source_rgba(ctx, 250.0/255, 0, 0, 0.75);
+                cairo_set_source_rgba(ctx, 250.0/255, 0, 0, 0.75); // TODO inside color after wrong guess
                 break;
             default:
-                cairo_set_source_rgba(ctx, 0, 0, 0, 0.75);
+                cairo_set_source_rgba(ctx, 0, 0, 0, 0.75); // TODO inside color
                 break;
         }
         cairo_fill_preserve(ctx);
 
         switch (pam_state) {
             case STATE_PAM_VERIFY:
-                cairo_set_source_rgb(ctx, 51.0/255, 0, 250.0/255);
+                cairo_set_source_rgb(ctx, 0, 0, 0); // TODO ring color while verifying
                 break;
             case STATE_PAM_WRONG:
-                cairo_set_source_rgb(ctx, 125.0/255, 51.0/255, 0);
+                cairo_set_source_rgb(ctx, 125.0/255, 51.0/255, 0); // TODO ring color after wrong guess
                 break;
             case STATE_PAM_IDLE:
-                cairo_set_source_rgb(ctx, 51.0/255, 125.0/255, 0);
+                cairo_set_source_rgb(ctx, 51.0/255, 125.0/255, 0); // TODO ring color
                 break;
         }
         cairo_stroke(ctx);
