@@ -57,9 +57,9 @@ extern bool tile;
 /* The background color to use (in hex). */
 extern char color[7];
 /* indicator color options */
-extern char insidevercolor[7];
-extern char insidewrongcolor[7];
-extern char insidecolor[7];
+extern char insidevercolor[9];
+extern char insidewrongcolor[9];
+extern char insidecolor[9];
 extern char ringvercolor[7];
 extern char ringwrongcolor[7];
 extern char ringcolor[7];
@@ -126,24 +126,30 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
     }
 
     /* build indicator color arrays */
-    char strgroupsiv[3][3] = {{insidevercolor[0], insidevercolor[1], '\0'},
+    char strgroupsiv[4][3] = {{insidevercolor[0], insidevercolor[1], '\0'},
                               {insidevercolor[2], insidevercolor[3], '\0'},
-                              {insidevercolor[4], insidevercolor[5], '\0'}};
-    uint32_t insidever16[3] = {(strtol(strgroupsiv[0], NULL, 16)),
+                              {insidevercolor[4], insidevercolor[5], '\0'},
+                              {insidevercolor[6], insidevercolor[7], '\0'}};
+    uint32_t insidever16[4] = {(strtol(strgroupsiv[0], NULL, 16)),
                                (strtol(strgroupsiv[1], NULL, 16)),
-                               (strtol(strgroupsiv[2], NULL, 16))};
-    char strgroupsiw[3][3] = {{insidewrongcolor[0], insidewrongcolor[1], '\0'},
+                               (strtol(strgroupsiv[2], NULL, 16)),
+                               (strtol(strgroupsiv[3], NULL, 16))};
+    char strgroupsiw[4][3] = {{insidewrongcolor[0], insidewrongcolor[1], '\0'},
                               {insidewrongcolor[2], insidewrongcolor[3], '\0'},
-                              {insidewrongcolor[4], insidewrongcolor[5], '\0'}};
-    uint32_t insidewrong16[3] = {(strtol(strgroupsiw[0], NULL, 16)),
+                              {insidewrongcolor[4], insidewrongcolor[5], '\0'},
+                              {insidewrongcolor[6], insidewrongcolor[7], '\0'}};
+    uint32_t insidewrong16[4] = {(strtol(strgroupsiw[0], NULL, 16)),
                                  (strtol(strgroupsiw[1], NULL, 16)),
-                                 (strtol(strgroupsiw[2], NULL, 16))};
-    char strgroupsi[3][3] = {{insidecolor[0], insidecolor[1], '\0'},
+                                 (strtol(strgroupsiw[2], NULL, 16)),
+                                 (strtol(strgroupsiw[3], NULL, 16))};
+    char strgroupsi[4][3] = {{insidecolor[0], insidecolor[1], '\0'},
                              {insidecolor[2], insidecolor[3], '\0'},
-                             {insidecolor[4], insidecolor[5], '\0'}};
-    uint32_t inside16[3] = {(strtol(strgroupsi[0], NULL, 16)),
+                             {insidecolor[4], insidecolor[5], '\0'},
+                             {insidecolor[6], insidecolor[7], '\0'}};
+    uint32_t inside16[4] = {(strtol(strgroupsi[0], NULL, 16)),
                             (strtol(strgroupsi[1], NULL, 16)),
-                            (strtol(strgroupsi[2], NULL, 16))};
+                            (strtol(strgroupsi[2], NULL, 16)),
+                            (strtol(strgroupsi[3], NULL, 16))};
     char strgroupsrv[3][3] = {{ringvercolor[0], ringvercolor[1], '\0'},
                               {ringvercolor[2], ringvercolor[3], '\0'},
                               {ringvercolor[4], ringvercolor[5], '\0'}};
@@ -177,13 +183,13 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
          * (currently verifying, wrong password, or default) */
         switch (pam_state) {
             case STATE_PAM_VERIFY:
-                cairo_set_source_rgba(ctx, (double)insidever16[0]/255, (double)insidever16[1]/255, (double)insidever16[2]/255, 0.75);
+                cairo_set_source_rgba(ctx, (double)insidever16[0]/255, (double)insidever16[1]/255, (double)insidever16[2]/255, (double)insidever16[3]/255);
                 break;
             case STATE_PAM_WRONG:
-                cairo_set_source_rgba(ctx, (double)insidewrong16[0]/255, (double)insidewrong16[1]/255, (double)insidewrong16[2]/255, 0.75);
+                cairo_set_source_rgba(ctx, (double)insidewrong16[0]/255, (double)insidewrong16[1]/255, (double)insidewrong16[2]/255, (double)insidewrong16[3]/255);
                 break;
             default:
-                cairo_set_source_rgba(ctx, (double)inside16[0]/255, (double)inside16[1]/255, (double)inside16[2]/255, 0.75);
+                cairo_set_source_rgba(ctx, (double)inside16[0]/255, (double)inside16[1]/255, (double)inside16[2]/255, (double)inside16[3]/255);
                 break;
         }
         cairo_fill_preserve(ctx);

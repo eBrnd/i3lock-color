@@ -42,9 +42,9 @@
 
 char color[7] = "ffffff";
 /* options for unlock indicator colors */
-char insidevercolor[7] = "006eff"; // TODO alpha channel
-char insidewrongcolor[7] = "fa0000";
-char insidecolor[7] = "000000";
+char insidevercolor[9] = "006effbf";
+char insidewrongcolor[9] = "fa0000bf";
+char insidecolor[9] = "000000bf";
 char ringvercolor[7] = "3300fa";
 char ringwrongcolor[7] = "7d3300";
 char ringcolor[7] = "337d00";
@@ -596,7 +596,7 @@ int main(int argc, char *argv[]) {
 
     while ((o = getopt_long(argc, argv, "hvnbdc:p:u"
 #ifndef NOLIBCAIRO
-        "i:t1:2:3:4:5:6:" //TODO need to add my options here
+        "i:t1:2:3:4:5:6:"
 #endif
         , longopts, &optind)) != -1) {
         switch (o) {
@@ -640,8 +640,8 @@ int main(int argc, char *argv[]) {
             if (arg[0] == '#')
                 arg++;
 
-            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", insidevercolor) != 1)
-                errx(1, "insidevercolor is invalid, color must be given in 6-byte format: rrggbb\n");
+            if (strlen(arg) != 8 || sscanf(arg, "%08[0-9a-fA-F]", insidevercolor) != 1)
+                errx(1, "insidevercolor is invalid, color must be given in 8-byte format: rrggbbaa\n");
 
             break;
         }
@@ -652,8 +652,8 @@ int main(int argc, char *argv[]) {
             if (arg[0] == '#')
                 arg++;
 
-            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", insidewrongcolor) != 1)
-                errx(1, "insidewrongcolor is invalid, color must be given in 6-byte format: rrggbb\n");
+            if (strlen(arg) != 8 || sscanf(arg, "%08[0-9a-fA-F]", insidewrongcolor) != 1)
+                errx(1, "insidewrongcolor is invalid, color must be given in 8-byte format: rrggbbaa\n");
 
             break;
         }
@@ -664,8 +664,8 @@ int main(int argc, char *argv[]) {
             if (arg[0] == '#')
                 arg++;
 
-            if (strlen(arg) != 6 || sscanf(arg, "%06[0-9a-fA-F]", insidecolor) != 1)
-                errx(1, "insidecolor is invalid, color must be given in 6-byte format: rrggbb\n");
+            if (strlen(arg) != 8 || sscanf(arg, "%08[0-9a-fA-F]", insidecolor) != 1)
+                errx(1, "insidecolor is invalid, color must be given in 8-byte format: rrggbbaa\n");
 
             break;
         }
