@@ -125,13 +125,43 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
         cairo_fill(xcb_ctx);
     }
 
-    /* build indicator color structures */
-    char strgroups[3][3] = {{insidevercolor[0], insidevercolor[1], '\0'},
-                            {insidevercolor[2], insidevercolor[3], '\0'},
-                            {insidevercolor[4], insidevercolor[5], '\0'}};
-    uint32_t insidever16[3] = {(strtol(strgroups[0], NULL, 16)),
-                            (strtol(strgroups[1], NULL, 16)),
-                            (strtol(strgroups[2], NULL, 16))};
+    /* build indicator color arrays */
+    char strgroupsiv[3][3] = {{insidevercolor[0], insidevercolor[1], '\0'},
+                              {insidevercolor[2], insidevercolor[3], '\0'},
+                              {insidevercolor[4], insidevercolor[5], '\0'}};
+    uint32_t insidever16[3] = {(strtol(strgroupsiv[0], NULL, 16)),
+                               (strtol(strgroupsiv[1], NULL, 16)),
+                               (strtol(strgroupsiv[2], NULL, 16))};
+    char strgroupsiw[3][3] = {{insidewrongcolor[0], insidewrongcolor[1], '\0'},
+                              {insidewrongcolor[2], insidewrongcolor[3], '\0'},
+                              {insidewrongcolor[4], insidewrongcolor[5], '\0'}};
+    uint32_t insidewrong16[3] = {(strtol(strgroupsiw[0], NULL, 16)),
+                                 (strtol(strgroupsiw[1], NULL, 16)),
+                                 (strtol(strgroupsiw[2], NULL, 16))};
+    char strgroupsi[3][3] = {{insidecolor[0], insidecolor[1], '\0'},
+                             {insidecolor[2], insidecolor[3], '\0'},
+                             {insidecolor[4], insidecolor[5], '\0'}};
+    uint32_t inside16[3] = {(strtol(strgroupsi[0], NULL, 16)),
+                            (strtol(strgroupsi[1], NULL, 16)),
+                            (strtol(strgroupsi[2], NULL, 16))};
+    char strgroupsrv[3][3] = {{ringvercolor[0], ringvercolor[1], '\0'},
+                              {ringvercolor[2], ringvercolor[3], '\0'},
+                              {ringvercolor[4], ringvercolor[5], '\0'}};
+    uint32_t ringver16[3] = {(strtol(strgroupsrv[0], NULL, 16)),
+                             (strtol(strgroupsrv[1], NULL, 16)),
+                             (strtol(strgroupsrv[2], NULL, 16))};
+    char strgroupsrw[3][3] = {{ringwrongcolor[0], ringwrongcolor[1], '\0'},
+                              {ringwrongcolor[2], ringwrongcolor[3], '\0'},
+                              {ringwrongcolor[4], ringwrongcolor[5], '\0'}};
+    uint32_t ringwrong16[3] = {(strtol(strgroupsrw[0], NULL, 16)),
+                               (strtol(strgroupsrw[1], NULL, 16)),
+                               (strtol(strgroupsrw[2], NULL, 16))};
+    char strgroupsr[3][3] = {{ringcolor[0], ringcolor[1], '\0'},
+                             {ringcolor[2], ringcolor[3], '\0'},
+                             {ringcolor[4], ringcolor[5], '\0'}};
+    uint32_t ring16[3] = {(strtol(strgroupsr[0], NULL, 16)),
+                          (strtol(strgroupsr[1], NULL, 16)),
+                          (strtol(strgroupsr[2], NULL, 16))};
 
     if (unlock_state >= STATE_KEY_PRESSED && unlock_indicator) {
         /* Draw a (centered) circle with transparent background. */
@@ -147,26 +177,26 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
          * (currently verifying, wrong password, or default) */
         switch (pam_state) {
             case STATE_PAM_VERIFY:
-                cairo_set_source_rgba(ctx, insidever16[0]/255, insidever16[1]/255, insidever16[2]/255, 0.75); // TODO inside color while verifying
+                cairo_set_source_rgba(ctx, (double)insidever16[0]/255, (double)insidever16[1]/255, (double)insidever16[2]/255, 0.75);
                 break;
             case STATE_PAM_WRONG:
-                cairo_set_source_rgba(ctx, 250.0/255, 0, 0, 0.75); // TODO inside color after wrong guess
+                cairo_set_source_rgba(ctx, (double)insidewrong16[0]/255, (double)insidewrong16[1]/255, (double)insidewrong16[2]/255, 0.75);
                 break;
             default:
-                cairo_set_source_rgba(ctx, 0, 0, 0, 0.75); // TODO inside color
+                cairo_set_source_rgba(ctx, (double)inside16[0]/255, (double)inside16[1]/255, (double)inside16[2]/255, 0.75);
                 break;
         }
         cairo_fill_preserve(ctx);
 
         switch (pam_state) {
             case STATE_PAM_VERIFY:
-                cairo_set_source_rgb(ctx, 0, 0, 0); // TODO ring color while verifying
+                cairo_set_source_rgb(ctx, (double)ringver16[0]/255, (double)ringver16[1]/255, (double)ringver16[2]/255);
                 break;
             case STATE_PAM_WRONG:
-                cairo_set_source_rgb(ctx, 125.0/255, 51.0/255, 0); // TODO ring color after wrong guess
+                cairo_set_source_rgb(ctx, (double)ringwrong16[0]/255, (double)ringwrong16[1]/255, (double)ringwrong16[2]/255);
                 break;
             case STATE_PAM_IDLE:
-                cairo_set_source_rgb(ctx, 51.0/255, 125.0/255, 0); // TODO ring color
+                cairo_set_source_rgb(ctx, (double)ring16[0]/255, (double)ring16[1]/255, (double)ring16[2]/255);
                 break;
         }
         cairo_stroke(ctx);

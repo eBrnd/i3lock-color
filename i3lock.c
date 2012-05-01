@@ -46,8 +46,8 @@ char insidevercolor[7] = "006eff"; // TODO alpha channel
 char insidewrongcolor[7] = "fa0000";
 char insidecolor[7] = "000000";
 char ringvercolor[7] = "3300fa";
-char ringwrongcolor[7] = "fa0000";
-char ringcolor[7] = "000000";
+char ringwrongcolor[7] = "7d3300";
+char ringcolor[7] = "337d00";
 
 uint32_t last_resolution[2];
 xcb_window_t win;
