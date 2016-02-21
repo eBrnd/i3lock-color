@@ -3,6 +3,11 @@ i3lock-color
 
 *making i3lock's typing indicator color scheme configurable*
 
+**This i3lock-color repo is out of date and not being maintained any more.
+Please check out [Arcaena/i3lock-color](https://github.com/Arcaena/i3lock-color) for a newer version!**
+
+----------
+
 I added the following command line options:
 * `--insidevercolor=rrggbbaa` -- Inside of the circle while the password is being verified
 * `--insidewrongcolor=rrggbbaa` -- Inside of the circle when a wrong password was entered
