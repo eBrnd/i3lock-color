@@ -195,18 +195,18 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
                           (strtol(strgroupst[1], NULL, 16)),
                           (strtol(strgroupst[2], NULL, 16)),
                           (strtol(strgroupst[3], NULL, 16))};
-    char strgroupsk[4][3] = {{keyhlcolor[0], textcolor[1], '\0'},
-                             {keyhlcolor[2], textcolor[3], '\0'},
-                             {keyhlcolor[4], textcolor[5], '\0'},
-                             {keyhlcolor[6], textcolor[7], '\0'}};
+    char strgroupsk[4][3] = {{keyhlcolor[0], keyhlcolor[1], '\0'},
+                             {keyhlcolor[2], keyhlcolor[3], '\0'},
+                             {keyhlcolor[4], keyhlcolor[5], '\0'},
+                             {keyhlcolor[6], keyhlcolor[7], '\0'}};
     uint32_t keyhl16[4] = {(strtol(strgroupsk[0], NULL, 16)),
                            (strtol(strgroupsk[1], NULL, 16)),
                            (strtol(strgroupsk[2], NULL, 16)),
                            (strtol(strgroupsk[3], NULL, 16))};
-    char strgroupsb[4][3] = {{bshlcolor[0], textcolor[1], '\0'},
-                             {bshlcolor[2], textcolor[3], '\0'},
-                             {bshlcolor[4], textcolor[5], '\0'},
-                             {bshlcolor[6], textcolor[7], '\0'}};
+    char strgroupsb[4][3] = {{bshlcolor[0], bshlcolor[1], '\0'},
+                             {bshlcolor[2], bshlcolor[3], '\0'},
+                             {bshlcolor[4], bshlcolor[5], '\0'},
+                             {bshlcolor[6], bshlcolor[7], '\0'}};
     uint32_t bshl16[4] = {(strtol(strgroupsb[0], NULL, 16)),
                           (strtol(strgroupsb[1], NULL, 16)),
                           (strtol(strgroupsb[2], NULL, 16)),
